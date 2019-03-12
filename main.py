@@ -2,6 +2,7 @@ from libraries import filelib as fl
 from libraries import emailLib as el
 import accountSettings as acs
 import getpass
+from tqdm import tqdm
 
 
 class Settings:
@@ -123,12 +124,11 @@ class RunEmail:
     def _deleteMail(self, mailBox, acc, spamMail):
         idLists = acc.getIDs(mailBox, self._getSearch("from", spamMail))
         if idLists != []:
-            print(f"Found {len(idLists)} spam emails from", f"{spamMail}")
             acc.deleteMsg(idLists, self.flag, self.trash)
 
-    def deleteMail(self, acc):
+    def deleteMail(self, acc, user, password):
         print("Searching for SPAMS to delete, please wait...")
-        for spamMail in self.settings.spamList:
+        for spamMail in tqdm(self.settings.spamList):
             self._deleteMail("inbox", acc, spamMail)
             self._deleteMail(self.spamBox, acc, spamMail)
             acc.closeServer()
@@ -148,7 +148,7 @@ class RunEmail:
                              self.domain, self.settings.spamList)
             self._getStatus(user, acc.getNumOfEmails("inbox", "unseen"),
                             acc.getNumOfEmails(self.spamBox, "messages"))
-            task(acc)
+            task(acc, user, password)
 
 
 def addSpam():
