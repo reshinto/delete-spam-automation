@@ -9,7 +9,9 @@
 * Python 3.6 and above should work.
 
 ## How to get it to work?
-* No additional installation required. Only Python needs to be installed.
+* Python needs to be installed.
+* tqdm modules need to be installed for the progress bar to work.
+> pip install tqdm
 * Default mode: all files are created, opened, and saved automatically
     * If you cloned this app, no files will be created, only filling of sensitive information (email, password) and editing of spam_list.txt is required.
     * If the required text files are not included, it will be automatically be created and you will be prompted to fill in the required information.
