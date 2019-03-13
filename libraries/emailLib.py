@@ -94,32 +94,19 @@ class UseIMAP(EmailAccount):
         mailboxName = mailboxName.strip('"')
         return (flags, delimiter, mailboxName)
 
-    def getIDs(self, mailbox, search):
+    def getIDs(self, search):
         """
         Search 1 mailbox for match and return a list of matching IDs in string
         format.
+        Folder has to be selected first before implementing.
+        Use the self.selectFolder method.
         search must be = "ALL" or e.g.: "(FROM xxx@gmail.com)" or combined
         "(FROM "xxx@gmail.com" SUBJECT "Example message")"
         """
-        self.selectFolder(mailbox)
+        # self.selectFolder(mailbox)
         typ, msgIDs = self.server.search(None, search)
         # return a list of msgIDs in string format
         return msgIDs[0].decode().split()
-
-    def getAllIDs(self, search):
-        """
-        Search each maiboxes and return a compiled list of
-        all the matching IDs in string format.
-        This method will exclude repeating IDs.
-        """
-        allIDs = []
-        for folder in self.getFolderList():
-            idList = self.getIDs(folder, search)
-            if idList != []:
-                for _id in idList:
-                    if _id not in allIDs:
-                        allIDs.append(_id)
-        return allIDs
 
     def deleteMsg(self, getIDs, flags, trash):
         """

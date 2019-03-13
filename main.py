@@ -121,17 +121,33 @@ class RunEmail:
             raise ValueError(f"{domainName} domain is not supported!")
         self.domain = domainName
 
-    def _deleteMail(self, mailBox, acc, spamMail):
-        idLists = acc.getIDs(mailBox, self._getSearch("from", spamMail))
-        if idLists != []:
-            acc.deleteMsg(idLists, self.flag, self.trash)
+    # def _deleteMail(self, mailBox, acc, spamMail):
+    #     idLists = acc.getIDs(mailBox, self._getSearch("from", spamMail))
+    #     if idLists != []:
+    #         acc.deleteMsg(idLists, self.flag, self.trash)
+
+    # def deleteMail(self, acc, user, password):
+    #     print("Searching for SPAMS to delete, please wait...")
+    #     for spamMail in tqdm(self.settings.spamList):
+    #         self._deleteMail("inbox", acc, spamMail)
+    #         self._deleteMail(self.spamBox, acc, spamMail)
+    #         acc.closeServer()
+    #     print("All spam mails have been deleted from INBOX and JUNK!")
+    #     acc.logoffServer()
+    #     print("Logout successfully!\n")
+
+    def _deleteMail(self, mailBox, acc):
+        print(f"Searching and deleting SPAMS in {mailBox}...")
+        totalIDs = []
+        acc.selectFolder(mailBox)
+        for spamMail in tqdm(self.settings.spamList):
+            totalIDs += acc.getIDs(self._getSearch("from", spamMail))
+        acc.deleteMsg(totalIDs, self.flag, self.trash)
 
     def deleteMail(self, acc, user, password):
-        print("Searching for SPAMS to delete, please wait...")
-        for spamMail in tqdm(self.settings.spamList):
-            self._deleteMail("inbox", acc, spamMail)
-            self._deleteMail(self.spamBox, acc, spamMail)
-            acc.closeServer()
+        self._deleteMail("inbox", acc)
+        self._deleteMail(self.spamBox, acc)
+        acc.closeServer()
         print("All spam mails have been deleted from INBOX and JUNK!")
         acc.logoffServer()
         print("Logout successfully!\n")
