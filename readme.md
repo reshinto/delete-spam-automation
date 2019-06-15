@@ -1,7 +1,7 @@
-# Spam Email Automation
-* The purpose of this app is to delete all of my spam emails automatically for me.
+# Automate Deletion of Spam Emails
+* The purpose of this app is to automate the deletion of all spam emails.
 * The downside of this is that no AI is implemented, therefore, spam emails are not automatically detected.
-* This means that you have to update the spam_list.txt manually.
+* This means that manually updating of spam_list.txt is required.
 
 ## Tests
 * Tested on Mac OSX Mojave.
@@ -13,20 +13,18 @@
 * tqdm modules need to be installed for the progress bar to work.
 > pip install tqdm
 * Default mode: all files are created, opened, and saved automatically
-    * If you cloned this app, no files will be created, only filling of sensitive information (email, password) and editing of spam_list.txt is required.
-    * If the required text files are not included, it will be automatically be created and you will be prompted to fill in the required information.
+    * If app is cloned, no files will be created. Thus, filling of sensitive information (email, password) and editing of spam_list.txt is required.
+    * If the required text files are not included, it will automatically be created and you will be prompted to fill in the required information.
     * To run
     > python run.py
 
-* Manual mode: all files are manually created.
+* Manual mode: manually create all files.
     * All files created and the values stored will be saved at the path keyed during prompt.
     * However, these files and paths have to be added to the useDefault method in the fileLib.py located in the libraries folder.
-    * Any further changes, please refer to the docs written in the files, which states that it has to be updated.
+    * Any further changes, please refer to the docs written in the .py files for the required location to update.
     * To run
     > python run.py manual
 
-* Help mode: display help menu if you forgotten the simple commands.
+* Help mode: display help menu if you have forgotten the simple commands.
     * To run
     > python run.py help
-
-
